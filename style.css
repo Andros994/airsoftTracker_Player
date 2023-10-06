@@ -1,0 +1,9 @@
+#infoCard{
+    width: 50%;
+}
+
+@media only screen and (max-width: 600px) {
+    #infoCard {
+        width: 90%;
+    }
+  }

@@ -2,6 +2,10 @@
     width: 50%;
 }
 
+.required{
+    color: red;
+}
+
 @media only screen and (max-width: 600px) {
     #infoCard {
         width: 90%;

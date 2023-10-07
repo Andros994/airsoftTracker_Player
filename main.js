@@ -1,24 +1,33 @@
 var latitude, longitude, accuracy;
-var nickname, asd, fazione, ruolo;
+var nickname, asd, fazione, phone, link, plotone, ruolo, color;
 
 $(document).ready(function(){
+    $('#spinner').hide();
+    $('#successMsg').hide();
+    $('#errorMsg').hide();
+
     $('#salva').on('click', function(){
-        nickname = $('#nickname').val();
+        nickname = $('#nome').val();
         asd = $('#asd').val();
         fazione = $('#fazione').val();
+        phone = $('#phone').val();
         link = $('#ngLink').val();
+        plotone = $('#plotone').val();
         ruolo = $('#ruolo option:selected').val();
+        color = $('#colore option:selected').val();
 
         // controllo i campi che siano stati compilati
-        if(nickname != null && nickname != '' && nickname != undefined && asd != null && asd != '' && asd != undefined && fazione != null && fazione != '' && fazione != undefined && ruolo != null && ruolo != '' && ruolo != undefined){
-            sendPosition(nickname, asd, fazione, ruolo, link);
+        if(nickname != null && nickname != '' && nickname != undefined && asd != null && asd != '' && asd != undefined && link != '' && link != null && link != undefined){
+            $('#spinner').show();
+            sendPosition();
         } else {
-            alert('Compila tutti i campi')
+            alert('Compila tutti i campi');
+            $('#spinner').hide();
         }
     })
 })
 
-function sendPosition(nick, asd, faz, role, link){
+function sendPosition(){
     if ("geolocation" in navigator){
         navigator.geolocation.getCurrentPosition(
             // Successo nel trovare la tua posizione
@@ -26,7 +35,7 @@ function sendPosition(nick, asd, faz, role, link){
                 latitude = position.coords.latitude;
                 longitude = position.coords.longitude;
                 accuracy = position.coords.accuracy;
-                sendInfo(latitude, longitude, accuracy, nick, asd, faz, role, link);
+                sendInfo();
             },
             (error) => {
                 alert("Errore nel calcolo della posizione", error)
@@ -37,19 +46,22 @@ function sendPosition(nick, asd, faz, role, link){
     }
 }
 
-function sendInfo(latitude, longitude, accuracy, nick, asd, faz, role, link){
+function sendInfo(){
     var json = {
-        nick: nick,
+        nick: nickname,
         asd: asd,
-        fazione: faz,
-        ruolo: role,
+        fazione: fazione,
+        ruolo: ruolo,
+        iconColor: color,
+        phone: phone,
+        plotone: plotone,
         coords: {
             latitude: latitude,
             longitude: longitude,
             accuracy: accuracy
         }
     }
-    console.log(json);
+
     //salvataggio del json
     $.ajax({
         type: "POST",
@@ -57,12 +69,14 @@ function sendInfo(latitude, longitude, accuracy, nick, asd, faz, role, link){
         data: JSON.stringify(json),
         dataType: "application/json",
         success: function(){
-            console.log('data transmitted');
+            $('#successMsg').show();
+            $('#errorMsg').hide();
         },
         error: function(){
-            console.log('failed to send data')
+            $('#successMsg').hide();
+            $('#errorMsg').show();
         }
     });
     
-    setInterval(sendPosition(nick,asd,faz,role, link), 60000);
+    setInterval(sendPosition(), 60000);
 }

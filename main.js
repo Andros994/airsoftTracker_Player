@@ -12,7 +12,7 @@ $(document).ready(function(){
         asd = $('#asd').val();
         fazione = $('#fazione').val();
         phone = $('#phone').val();
-        link = $('#ngLink').val();
+        link = ($('#ngLink').val()).split(" ").join("");
         plotone = $('#plotone').val();
         ruolo = $('#ruolo option:selected').val();
         color = $('#colore option:selected').val();
@@ -72,6 +72,7 @@ function sendInfo(){
     //salvataggio del json
     $.ajax({
         type: "POST",
+        async: false,
         url: link+'/geoData/save',
         data: JSON.stringify(json),
         dataType: "application/json",

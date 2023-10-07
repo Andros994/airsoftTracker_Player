@@ -1,5 +1,12 @@
 #infoCard{
     width: 50%;
+    background-color: rgb(247, 247, 247);
+    height: fit-content;
+}
+
+#main{
+    background-color: rgb(76, 76, 76);
+    height: 100vh;
 }
 
 .required{

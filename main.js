@@ -1,5 +1,6 @@
 var latitude, longitude, accuracy;
 var nickname, asd, fazione, phone, link, plotone, ruolo, color;
+var myInterval;
 
 $(document).ready(function(){
     $('#spinner').hide();
@@ -24,6 +25,12 @@ $(document).ready(function(){
             alert('Compila tutti i campi');
             $('#spinner').hide();
         }
+    })
+
+    $('#stopSending').on('click', function(){
+        clearInterval(myInterval);
+        $('#spinner').hide();
+        $('#successMsg, #errorMsg').hide();
     })
 })
 
@@ -68,15 +75,22 @@ function sendInfo(){
         url: link+'/geoData/save',
         data: JSON.stringify(json),
         dataType: "application/json",
-        success: function(){
+        contentType: "application/json",
+        success: function(jsonResposne){
+            console.log(jsonResposne);
             $('#successMsg').show();
             $('#errorMsg').hide();
         },
-        error: function(){
-            $('#successMsg').hide();
-            $('#errorMsg').show();
+        error: function(err){
+            if (err.status == 200){
+                $('#successMsg').show();
+                $('#errorMsg').hide();
+            } else {
+                $('#successMsg').hide();
+                $('#errorMsg').show();
+            }
         }
     });
     
-    setInterval(sendPosition(), 60000);
+    myInterval = setInterval(sendPosition(), 60000);
 }

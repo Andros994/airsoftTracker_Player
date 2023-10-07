@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-    <div class="d-flex mt-5" style="justify-content: center;">
+    <div id="main" class="d-flex pt-4" style="justify-content: center;">
         <div class="card" id="infoCard">
             <div class="card-header">
                 <label for="">Informazioni operatore</label>
@@ -63,11 +63,12 @@
                     <label class="col-3" for="ngLink">Link <span class="required">*</span></label>
                     <input type="text" class="form form-control" id="ngLink" name="ngLink" placeholder="Link per il game">
                 </div>
-
+                
                 <hr>
                 <div>
                     <center>
-                        <button type="button" id="salva" class="btn btn-primary">Salva <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+                        <button type="button" id="salva" class="btn btn-primary">Trasmetti <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-danger" id="stopSending">Interrompi</button>
                     </center>
                 </div>
             </div>
